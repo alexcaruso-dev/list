@@ -1,4 +1,4 @@
-package dev.alexcaruso.a_list
+package dev.alexcaruso.list
 
 import io.flutter.embedding.android.FlutterActivity
 
