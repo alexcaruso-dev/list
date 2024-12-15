@@ -26,11 +26,17 @@ class _GenericListState extends State<GenericList> {
               bottom: MediaQuery.of(context).viewInsets.bottom
           ),
           child: const SizedBox(
-            height: 200, // Set your desired height
-            child: Center(
-              child: TextField(autofocus:true),
+            width: double.infinity,
+            child: TextField(
+              autofocus: true,
+              maxLines: null,
+              decoration: InputDecoration(
+                labelText: 'Add a new item',
+                contentPadding: EdgeInsets.all(20.0),
             ),
-          )
-        ));
+          ),
+        ),
+      )
+    );
   }
 }
