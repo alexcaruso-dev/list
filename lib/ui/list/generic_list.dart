@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:list/models/item.dart';
 
 class GenericList extends StatefulWidget {
   const GenericList({super.key});
@@ -10,16 +11,39 @@ class GenericList extends StatefulWidget {
 class _GenericListState extends State<GenericList> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final List<String> _items = [];
+  final List<Item> _items = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                  visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                  leading: Checkbox(
+                      value: _items[index].checked,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _items[index].checked = newValue ?? false;
+                        });
+                      }),
+                  title: Text(_items[index].title));
+            }),
+      ),
       floatingActionButton: FloatingActionButton(
           onPressed: _show,
           child: const Icon(Icons.add)
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _show() {
@@ -50,7 +74,7 @@ class _GenericListState extends State<GenericList> {
 
   void _addItem(String item) {
     setState(() {
-      _items.add(item);
+      _items.add(Item(title: item));
       _controller.clear();
       _focusNode.requestFocus();
     });
