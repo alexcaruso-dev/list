@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:list/firebase/firestore_service.dart';
 import 'package:list/models/item.dart';
 
 class GenericList extends StatefulWidget {
@@ -9,9 +10,23 @@ class GenericList extends StatefulWidget {
 }
 
 class _GenericListState extends State<GenericList> {
+  final FirestoreService _firestoreService = FirestoreService();
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final List<Item> _items = [];
+  List<Item> _items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadList();
+  }
+
+  Future<void> _loadList() async {
+    var items = await _firestoreService.getList();
+    setState(() {
+      _items = items;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +90,7 @@ class _GenericListState extends State<GenericList> {
   void _addItem(String item) {
     setState(() {
       _items.add(Item(title: item));
+      _firestoreService.addListItem(Item(title: item));
       _controller.clear();
       _focusNode.requestFocus();
     });
