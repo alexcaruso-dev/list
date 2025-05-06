@@ -1,11 +1,13 @@
 class Item {
+  String? id;
   String title;
   bool checked;
 
-  Item({required this.title, this.checked = false});
+  Item({this.id, required this.title, this.checked = false});
 
-  factory Item.fromFirestore(Map<String, dynamic> data) {
+  factory Item.fromFirestore(String id, Map<String, dynamic> data) {
     return Item(
+      id: id,
       title: data['title'] ?? '',
       checked: data['checked'] ?? false,
     );

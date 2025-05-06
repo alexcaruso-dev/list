@@ -41,9 +41,7 @@ class _GenericListState extends State<GenericList> {
                   leading: Checkbox(
                       value: _items[index].checked,
                       onChanged: (bool? newValue) {
-                        setState(() {
-                          _items[index].checked = newValue ?? false;
-                        });
+                        _checkItem(index, newValue ?? false);
                       }),
                   title: Text(_items[index].title));
             }),
@@ -94,5 +92,11 @@ class _GenericListState extends State<GenericList> {
       _controller.clear();
       _focusNode.requestFocus();
     });
+  }
+
+  void _checkItem(int index, bool checked) {
+    final item = _items[index]..checked = checked;
+    _firestoreService.updateListItem(item);
+    setState(() {});
   }
 }
