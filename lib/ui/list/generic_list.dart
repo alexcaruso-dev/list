@@ -43,7 +43,7 @@ class _GenericListState extends State<GenericList> {
                       onChanged: (bool? newValue) {
                         _checkItem(index, newValue ?? false);
                       }),
-                  title: Text(_items[index].title));
+                  title: Text(_items[index].title, style: TextStyle(fontFamily: 'font')));
             }),
       ),
       floatingActionButton: FloatingActionButton(
