@@ -24,7 +24,7 @@ class _GenericListState extends State<GenericList> {
   Future<void> _loadList() async {
     var items = await _firestoreService.getList();
     setState(() {
-      _items = items;
+      _items = items.reorder();
     });
   }
 
@@ -99,6 +99,7 @@ class _GenericListState extends State<GenericList> {
   void _checkItem(int index, bool checked) {
     final item = _items[index]..checked = checked;
     _firestoreService.updateListItem(item);
+    _items.reorder();
     setState(() {});
   }
 }

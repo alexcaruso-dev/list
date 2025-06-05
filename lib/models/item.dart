@@ -20,3 +20,13 @@ class Item {
     };
   }
 }
+
+extension ItemExtension on List<Item> {
+  List<Item> reorder() {
+    sort((a, b) {
+      if (a.checked == b.checked) return 0;
+      return a.checked ? 1 : - 1;
+    });
+    return this;
+  }
+}
