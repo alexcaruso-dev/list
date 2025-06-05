@@ -85,6 +85,9 @@ class _GenericListState extends State<GenericList> {
   }
 
   void _addItem(String item) {
+    if (item.isEmpty) {
+      return;
+    }
     setState(() {
       _items.add(Item(title: item));
       _firestoreService.addListItem(Item(title: item));
