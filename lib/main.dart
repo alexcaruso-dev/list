@@ -39,18 +39,3 @@ class _AppState extends State<App> {
     );
   }
 }
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: const Icon(Icons.add)
-      ),
-    );
-  }}
