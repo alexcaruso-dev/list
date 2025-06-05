@@ -75,7 +75,6 @@ class _GenericListState extends State<GenericList> {
             maxLines: null,
             textInputAction: TextInputAction.done,
             decoration: const InputDecoration(
-              labelText: 'Add a new item',
               contentPadding: EdgeInsets.all(20.0),
             ),
             onSubmitted: _addItem,
