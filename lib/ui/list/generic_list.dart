@@ -33,22 +33,60 @@ class _GenericListState extends State<GenericList> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: ListView.builder(
-            itemCount: _items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                  visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                  leading: Checkbox(
-                      value: _items[index].checked,
-                      onChanged: (bool? newValue) {
-                        _checkItem(index, newValue ?? false);
-                      }),
-                  title: Text(_items[index].title, style: TextStyle(fontFamily: 'font')));
-            }),
+        child: Column(
+          children: [
+            _list(),
+            _clearButton()
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: _show,
-          child: const Icon(Icons.add)
+        backgroundColor: Colors.blueAccent,
+        onPressed: _show,
+        child: const Icon(Icons.add, color: Colors.white,),
+      ),
+    );
+  }
+
+  Widget _clearButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 40.0),
+      child: TextButton(
+        onPressed: _clearList,
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          textStyle: const TextStyle(fontFamily: 'font', fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        child: const Text('Clear'),
+      ),
+    );
+  }
+
+  Widget _list() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _items.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            leading: Checkbox(
+              fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
+                  return Colors.blueAccent;  // Checked color
+                }
+                return Colors.white70;     // Unchecked color
+              }),
+              value: _items[index].checked,
+              onChanged: (bool? newValue) {
+                _checkItem(index, newValue ?? false);
+              },
+            ),
+            title: Text(
+              _items[index].title,
+              style: const TextStyle(fontFamily: 'font'),
+            ),
+          );
+        },
       ),
     );
   }
@@ -101,5 +139,9 @@ class _GenericListState extends State<GenericList> {
     _firestoreService.updateListItem(item);
     _items.reorder();
     setState(() {});
+  }
+
+  void _clearList() {
+    // TODO: clear list in firestore
   }
 }
